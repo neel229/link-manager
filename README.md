@@ -1,6 +1,7 @@
 # oslash_backend
 
-#### DB Schema 
+#### DB Schema
+
 ```
 
     ┌──────────────────────────┐             ┌───────────────────────────┐
@@ -16,7 +17,9 @@
     └────────────┴─────────────┘             └─────────────┴─────────────┘
 
 ```
-Note: 
+
+Note:
+
 1. The id fields are the primary keys
 2. email field in users table & short_link field in shortcuts table are unique
 3. created_at has a default value set to `now`
