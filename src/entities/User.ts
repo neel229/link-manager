@@ -25,7 +25,6 @@ export class User {
 	@Column({ length: "32", unique: true })
 	email: string;
 
-	@Field()
 	@Column()
 	password: string;
 
