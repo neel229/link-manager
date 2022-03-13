@@ -8,7 +8,7 @@ import {
 } from "type-graphql";
 import { Service } from "typedi";
 
-import { Shortcut, NewShortcutInput } from "../entities/Shortcut";
+import { Shortcut, NewShortcutInput, SortInput } from "../entities/Shortcut";
 import { isAuth } from "../middlewares/auth";
 import { IContext } from "../interfaces/context";
 import { ShortcutService } from "../services/ShortcutService";
@@ -45,9 +45,16 @@ export class ShortcutResolver {
 
 	@Query(() => [Shortcut])
 	@UseMiddleware(isAuth)
-	async getShortcuts(@Ctx() { payload }: IContext): Promise<Shortcut[]> {
+	async getShortcuts(
+		@Arg("data", { nullable: true }) input: SortInput,
+		@Ctx() { payload }: IContext
+	): Promise<Shortcut[]> {
 		if (!payload?.userId) throw new Error("Invalid Authentication");
 		const user = await this.userService.getUser(payload?.userId);
-		return await this.shortcutService.getShortcuts(user);
+		if (!input) {
+			return await this.shortcutService.getShortcuts(user);
+		} else {
+			return await this.shortcutService.getShortcuts(user, input);
+		}
 	}
 }

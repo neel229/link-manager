@@ -1,4 +1,10 @@
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import {
+	Field,
+	ID,
+	InputType,
+	ObjectType,
+	registerEnumType
+} from "type-graphql";
 import {
 	Column,
 	CreateDateColumn,
@@ -55,4 +61,40 @@ export class NewShortcutInput implements Partial<Shortcut> {
 
 	@Field(() => [String], { nullable: true })
 	tags?: string[];
+}
+
+export enum SortableField {
+	shortLink,
+	description,
+	createdAt
+}
+
+registerEnumType(SortableField, {
+	name: "SortableField",
+	description: "Fields on which sorting needs to be applied"
+});
+
+export enum SortOrder {
+	ASC = "ASC",
+	DESC = "DESC"
+}
+
+registerEnumType(SortOrder, {
+	name: "SortOrder",
+	description:
+		"The order in which sorting needs to be done. Can be either ascending or descending"
+});
+
+@InputType()
+export class SortInput {
+	@Field(() => SortableField, {
+		nullable: true
+	})
+	field?: SortableField;
+
+	@Field(() => SortOrder, {
+		nullable: true,
+		defaultValue: "ASC"
+	})
+	order?: SortOrder;
 }
