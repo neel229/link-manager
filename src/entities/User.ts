@@ -32,6 +32,11 @@ export class User {
 	@Field()
 	@CreateDateColumn()
 	createdAt: Date;
+
+	// only expose accessToken to GraphQL type
+	// and not store in db
+	@Field({ nullable: true })
+	accessToken?: string;
 }
 
 @InputType()
