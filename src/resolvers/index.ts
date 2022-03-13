@@ -1,3 +1,4 @@
 import { UserResolver } from "./UserResolver";
+import { ShortcutResolver } from "./ShortcutResolver";
 
-export const resolvers = [UserResolver] as const;
+export const resolvers = [UserResolver, ShortcutResolver] as const;

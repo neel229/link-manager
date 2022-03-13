@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IContext } from "../interfaces/context";
 import type { MiddlewareFn } from "type-graphql/dist/interfaces/Middleware";
 import { verifyJWT } from "../utils/jwt";
@@ -10,7 +11,8 @@ export const isAuth: MiddlewareFn<IContext> = async ({ context }, next) => {
 		if (sig !== "Bearer") throw new Error("Invalid token type");
 		const token = auth.split(" ")[1];
 		const payload = verifyJWT(token);
-		context.payload = payload;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		context.payload = payload as any;
 	} catch (err) {
 		console.error(err);
 		throw new Error("Not Authenticated");

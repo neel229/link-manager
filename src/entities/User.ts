@@ -2,9 +2,11 @@ import {
 	Column,
 	Entity,
 	PrimaryGeneratedColumn,
-	CreateDateColumn
+	CreateDateColumn,
+	OneToMany
 } from "typeorm";
 import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { Shortcut } from "./Shortcut";
 
 @ObjectType()
 @Entity()
@@ -36,6 +38,10 @@ export class User {
 	// and not store in db
 	@Field({ nullable: true })
 	accessToken?: string;
+
+	@Field(() => Shortcut)
+	@OneToMany(() => Shortcut, (shortcut) => shortcut.user)
+	shortcuts: Shortcut[];
 }
 
 @InputType()

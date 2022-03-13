@@ -23,20 +23,20 @@ export class UserResolver {
 
 	@Mutation(() => User, { description: "Creates a new user record in the db" })
 	async registerUser(
-		@Arg("data") user: UserRegInput,
+		@Arg("data") newUser: UserRegInput,
 		@Ctx() { res }: IContext
 	) {
-		const newUser = await this.userService.registerUser(user);
+		const user = await this.userService.registerUser(newUser);
 		// generate a jwt access token
-		const accessToken = signJWT(newUser, false);
+		const accessToken = signJWT(user, false);
 		// generate a jwt refresh token and save it
 		// as Http Only cookie
-		const refreshToken = signJWT(newUser, true);
+		const refreshToken = signJWT(user, true);
 		res.cookie("refresh_token", refreshToken, {
 			httpOnly: true
 		});
 		return {
-			...newUser,
+			...user,
 			accessToken
 		};
 	}

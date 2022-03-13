@@ -15,13 +15,13 @@ export class UserService {
 	private readonly userRepo: UserRepo;
 
 	// creates a new user record
-	async registerUser(user: UserRegInput): Promise<User> {
+	async registerUser(newUser: UserRegInput): Promise<User> {
 		// NOTE: Since the email field is required and unique
 		// there's no point in checking if the user already exists
 
 		// hash the password before saving it
-		user.password = await argon2.hash(user.password);
-		return await this.userRepo.save(user);
+		newUser.password = await argon2.hash(newUser.password);
+		return await this.userRepo.save(newUser);
 	}
 
 	// check if user login credentials are valid
@@ -37,5 +37,15 @@ export class UserService {
 
 		// if everything is valid, return the user object
 		return getUser;
+	}
+
+	// get user from its userId
+	async getUser(userId: string): Promise<User> {
+		// fetch user from it's userId
+		const user = await this.userRepo.findOne({ where: { id: userId } });
+		// if the user doesn't exist, throw an error
+		if (!user) throw new Error("User doesn't exist");
+
+		return user;
 	}
 }
