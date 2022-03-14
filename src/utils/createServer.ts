@@ -2,7 +2,10 @@ import express from "express";
 import http from "http";
 import { ApolloServer } from "apollo-server-express";
 import type { GraphQLSchema } from "graphql";
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import {
+	ApolloServerPluginDrainHttpServer,
+	ApolloServerPluginLandingPageGraphQLPlayground
+} from "apollo-server-core";
 import { IServer } from "src/interfaces/server";
 
 /**
@@ -21,7 +24,10 @@ export const createServer = async (schema: GraphQLSchema): Promise<IServer> => {
 				res
 			};
 		},
-		plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
+		plugins: [
+			ApolloServerPluginDrainHttpServer({ httpServer }),
+			ApolloServerPluginLandingPageGraphQLPlayground
+		]
 	});
 	await apolloServer.start();
 	apolloServer.applyMiddleware({ app });
