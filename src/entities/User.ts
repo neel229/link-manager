@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { Shortcut } from "./Shortcut";
+import { IsEmail, IsNotEmpty } from "class-validator";
 
 @ObjectType()
 @Entity()
@@ -47,23 +48,28 @@ export class User {
 @InputType()
 export class UserRegInput implements Partial<User> {
 	@Field()
+	@IsNotEmpty()
 	firstName: string;
 
 	@Field({ nullable: true })
 	lastName?: string;
 
 	@Field()
+	@IsEmail()
 	email: string;
 
 	@Field()
+	@IsNotEmpty()
 	password: string;
 }
 
 @InputType()
 export class UserLoginInput implements Partial<User> {
 	@Field()
+	@IsEmail()
 	email: string;
 
 	@Field()
+	@IsNotEmpty()
 	password: string;
 }

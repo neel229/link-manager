@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsUrl } from "class-validator";
 import {
 	Field,
 	ID,
@@ -51,12 +52,15 @@ export class Shortcut {
 @InputType()
 export class NewShortcutInput implements Partial<Shortcut> {
 	@Field()
+	@IsNotEmpty()
 	shortLink: string;
 
 	@Field()
+	@IsNotEmpty()
 	description: string;
 
 	@Field()
+	@IsUrl()
 	sourceURL: string;
 
 	@Field(() => [String], { nullable: true })
