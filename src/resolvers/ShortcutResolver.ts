@@ -24,6 +24,7 @@ export class ShortcutResolver {
 
 	@Mutation(() => Shortcut)
 	@UseMiddleware(isAuth)
+	// Resolver for creating a new shortcut
 	async createShortcut(
 		@Arg("data") newShortcut: NewShortcutInput,
 		@Ctx() { payload }: IContext
@@ -35,6 +36,7 @@ export class ShortcutResolver {
 
 	@Mutation(() => String)
 	@UseMiddleware(isAuth)
+	// Resolver for deleting a shortcut
 	async deleteShortcut(
 		@Arg("data") shortcutId: string,
 		@Ctx() { payload }: IContext
@@ -45,6 +47,7 @@ export class ShortcutResolver {
 
 	@Query(() => [Shortcut])
 	@UseMiddleware(isAuth)
+	// Resolver for fetching all the shortcuts
 	async getShortcuts(
 		@Arg("data", { nullable: true }) input: SortInput,
 		@Ctx() { payload }: IContext
@@ -60,6 +63,7 @@ export class ShortcutResolver {
 
 	@Query(() => [Shortcut])
 	@UseMiddleware(isAuth)
+	// Resolver for searching shortcuts based on a string
 	async searchShortcuts(
 		@Arg("data") searchText: string,
 		@Ctx() { payload }: IContext

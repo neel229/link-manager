@@ -1,13 +1,16 @@
 import { createConnection } from "typeorm";
+import { config } from "dotenv";
+
+config();
 
 export const testConn = (drop = false) => {
 	return createConnection({
 		type: "cockroachdb",
-		host: "localhost",
-		port: 26257,
-		username: "neel229",
-		password: "",
-		database: "oslash_test",
+		url: process.env.DB_URL_TEST,
+		ssl: true,
+		extra: {
+			options: "--cluster=cloned-quokka-306"
+		},
 		synchronize: drop,
 		dropSchema: drop,
 		logging: false,

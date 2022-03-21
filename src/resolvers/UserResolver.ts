@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { Service } from "typedi";
 
 import { User, UserLoginInput, UserRegInput } from "../entities/User";
@@ -15,13 +15,8 @@ import { signJWT } from "../utils/jwt";
 export class UserResolver {
 	constructor(private readonly userService: UserService) {}
 
-	// TODO: Remove in future
-	@Query(() => String)
-	hello() {
-		return "hello";
-	}
-
 	@Mutation(() => User, { description: "Creates a new user record in the db" })
+	// Resolver for creating a new user
 	async registerUser(
 		@Arg("data") newUser: UserRegInput,
 		@Ctx() { res }: IContext
@@ -42,6 +37,7 @@ export class UserResolver {
 	}
 
 	@Mutation(() => User, { description: "Login a user" })
+	// Resolver for logging in a user
 	async loginUser(@Arg("data") user: UserLoginInput, @Ctx() { res }: IContext) {
 		// validate user login credentials
 		const validUser = await this.userService.validateLogin(user);

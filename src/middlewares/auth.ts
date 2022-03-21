@@ -3,6 +3,9 @@ import { IContext } from "../interfaces/context";
 import type { MiddlewareFn } from "type-graphql/dist/interfaces/Middleware";
 import { verifyJWT } from "../utils/jwt";
 
+// isAuth is a middleware which checks if the passed jwt auth token is valid.
+// If not valid, it'll throw Invalid token. If valid but expired, it will throw
+// Not Authenticated error
 export const isAuth: MiddlewareFn<IContext> = async ({ context }, next) => {
 	const auth = context.req.headers["authorization"];
 	if (!auth) throw new Error("Not Authenticated");

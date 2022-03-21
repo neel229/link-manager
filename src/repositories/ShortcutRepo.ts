@@ -7,6 +7,9 @@ import { Shortcut } from "../entities/Shortcut";
 
 @EntityRepository(Shortcut)
 export class ShortcutRepo extends Repository<Shortcut> {
+	// searchShortcut is a custom method on ShortcutRepo which searches
+	// if the given string is contained within either of shortLink, description, or tags
+	// and returns shortcuts which does
 	async searchShortcuts(searchText: string): Promise<Shortcut[]> {
 		try {
 			const shortcuts: any = await this.manager.query(`

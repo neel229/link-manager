@@ -10,11 +10,11 @@ config();
 export const getDBConn = async (): Promise<Connection> => {
 	return await createConnection({
 		type: "cockroachdb",
-		host: "localhost",
-		port: 26257,
-		username: "neel229",
-		password: "",
-		database: "oslash",
+		url: process.env.DB_URL_PROD,
+		ssl: true,
+		extra: {
+			options: "--cluster=cloned-quokka-306"
+		},
 		synchronize: true,
 		logging: false,
 		entities: ["src/entities/**/*.ts"]
