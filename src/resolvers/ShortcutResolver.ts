@@ -57,4 +57,21 @@ export class ShortcutResolver {
 			return await this.shortcutService.getShortcuts(user, input);
 		}
 	}
+
+	@Query(() => [Shortcut])
+	@UseMiddleware(isAuth)
+	async searchShortcuts(
+		@Arg("data") searchText: string,
+		@Ctx() { payload }: IContext
+	): Promise<Shortcut[]> {
+		if (!payload?.userId) throw new Error("Invalid Authentication");
+		const user = await this.userService.getUser(payload?.userId);
+		if (!user) throw new Error("Invalid user");
+
+		const shortcuts = await this.shortcutService.searchShortcuts(searchText);
+		shortcuts.forEach((item) => {
+			item.user = user;
+		});
+		return shortcuts;
+	}
 }

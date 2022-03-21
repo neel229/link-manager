@@ -17,11 +17,11 @@ export class User {
 	id: string;
 
 	@Field()
-	@Column({ length: "32" })
+	@Column({ name: "first_name", length: "32" })
 	firstName: string;
 
 	@Field({ nullable: true })
-	@Column({ length: "32", nullable: true })
+	@Column({ name: "last_name", length: "32", nullable: true })
 	lastName?: string;
 
 	@Field()
@@ -32,7 +32,7 @@ export class User {
 	password: string;
 
 	@Field()
-	@CreateDateColumn()
+	@CreateDateColumn({ name: "created_at" })
 	createdAt: Date;
 
 	// only expose accessToken to GraphQL type

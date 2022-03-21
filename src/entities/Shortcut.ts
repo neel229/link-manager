@@ -28,7 +28,7 @@ export class Shortcut {
 	user: User;
 
 	@Field()
-	@Column({ unique: true })
+	@Column({ name: "short_link", unique: true })
 	@Index()
 	shortLink: string;
 
@@ -38,14 +38,14 @@ export class Shortcut {
 	description: string;
 
 	@Field()
-	@Column()
+	@Column({ name: "source_url" })
 	sourceURL: string;
 
 	@Field(() => [String], { nullable: true })
 	@Column("simple-array", { nullable: true })
 	tags?: string[];
 
-	@CreateDateColumn()
+	@CreateDateColumn({ name: "created_at" })
 	createdAt: Date;
 }
 

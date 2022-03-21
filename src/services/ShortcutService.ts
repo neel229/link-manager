@@ -87,6 +87,7 @@ export class ShortcutService {
 		return shortcuts;
 	}
 
+	// delete a shortcut
 	async deleteShortcut(shortcutId: string): Promise<string> {
 		const shortcut = await this.shortcutRepo.findOne({
 			where: { id: shortcutId }
@@ -95,5 +96,10 @@ export class ShortcutService {
 			throw new Error("Shortcut with given shortlink doesn't exist");
 		await this.shortcutRepo.delete(shortcutId);
 		return shortcut.id;
+	}
+
+	// search for shortcuts which match the string input
+	async searchShortcuts(searchText: string): Promise<Shortcut[]> {
+		return await this.shortcutRepo.searchShortcuts(searchText);
 	}
 }
