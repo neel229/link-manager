@@ -30,4 +30,4 @@ Note:
 1. I've used yarn for package management but you can use npm as well. Just make sure to delete the
 `yarn.lock` file before installing packages with npm.
 2. The integration tests can be ran with `yarn test or npm run test` command.
-3. `yarn start or npm run start` command starts the server
+3. `yarn start or npm run start` command starts the server. Once the server is started, you can query the graphql endpoints on `http://localhost:6900/graphql`
